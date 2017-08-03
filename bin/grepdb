@@ -1,0 +1,62 @@
+#!/usr/bin/env php
+<?php
+
+error_reporting(-1);
+
+require __DIR__ . '/../vendor/autoload.php';
+
+
+use Symfony\Component\Console\Input\ArgvInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
+use Symfony\Component\Console\Style\SymfonyStyle;
+
+
+// Pretty print uncaught exceptions
+if (version_compare(phpversion(), '7.0.0', '>=')) {
+    $exceptionHandler = function (\Throwable $e) {
+        $io = new SymfonyStyle(new ArgvInput(), new ConsoleOutput());
+        $io->error($e->getMessage());
+        $io->error($e->getTraceAsString());
+    };
+} else {
+    $exceptionHandler = function (\Exception $e) {
+        $io = new SymfonyStyle(new ArgvInput(), new ConsoleOutput());
+        $io->error($e->getMessage());
+        $io->error($e->getTraceAsString());
+    };
+}
+set_exception_handler($exceptionHandler);
+
+
+// Build Application
+// TODO: set version from git details
+$app = new \Symfony\Component\Console\Application('GrepDB');
+
+
+// Automatically load commands
+$commandPath = __DIR__ . '/../src/Command/';
+
+$iter = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($commandPath), RecursiveIteratorIterator::SELF_FIRST);
+foreach ($iter as $fileInfo) {
+    if (preg_match('/Command.php$/', $fileInfo->getFilename())) {
+        $pathDiff = str_replace($commandPath, '', $fileInfo->getPathName());
+        $parts = explode(DIRECTORY_SEPARATOR, $pathDiff);
+
+        $className = 'ptlis\\GrepDbCli\\Command\\';
+        for ($i = 0; $i < count($parts) - 1; $i++) {
+            $className .= $parts[$i] . '\\';
+        }
+
+        $className .= rtrim(basename($fileInfo->getFilename()), ".php");
+try {
+    $app->add(new $className());
+} catch (\Throwable $e) {
+    var_dump($e->getMessage());
+}
+    }
+}
+
+
+
+$app->run();
+

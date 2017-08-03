@@ -1,0 +1,31 @@
+{
+    "name": "ptlis/grep-db-cli",
+    "description": "terminal command to perform search & replace for mySQL databases",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "ptlis\\GrepDbCli\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ptlis\\GrepDbCli\\Test\\": "test/"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "ptlis",
+            "email": "ptlis@ptlis.net"
+        }
+    ],
+    "require": {
+        "ptlis/grep-db": "^0.0.1",
+        "symfony/console": "^3.3"
+    },
+    "bin": ["bin/biff"],
+    "minimumStability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "^6.2"
+    }
+}
