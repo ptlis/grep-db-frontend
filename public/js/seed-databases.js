@@ -5,7 +5,7 @@
 
     // Setup event handler
     $(document).ready(function () {
-        $('[data-seed-target]').each(function (index) {
+        $('[data-seed-db-target]').each(function (index) {
             $(this).on(
                 'click',
                 seedDatabases
@@ -14,7 +14,7 @@
     });
 
     function seedDatabases() {
-        var seedTarget = $(this).attr('data-seed-target');
+        var seedTarget = $(this).attr('data-seed-db-target');
         var params = {
             user: $('#' + seedTarget + '__user').val(),
             password: $('#' + seedTarget + '__password').val(),
@@ -26,7 +26,7 @@
 
         // Remove options, set only default message
         $select.empty();
-        $select.append('<option disabled>Select a database...</option>');
+        $select.append('<option disabled selected>Select a database...</option>');
 
         $.post('databases.php', params)
             .done(function (response) {

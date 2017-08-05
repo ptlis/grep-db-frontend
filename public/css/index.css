@@ -174,3 +174,25 @@ h1, h2, h3, h4, h5, h6 {
 .database-message {
     margin-bottom: 0;
 }
+
+.tables-message {
+    margin-top: 15px;
+    margin-bottom: 0;
+}
+
+/* Multiselect styles */
+.ms-container {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.ms-container .ms-selectable,
+.ms-container .ms-selection {
+    width: calc(50% - 15px) !important;
+}
+
+.ms-container .ms-selectable .ms-list,
+.ms-container .ms-selection .ms-list {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
