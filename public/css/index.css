@@ -128,7 +128,6 @@ input[type=password].align-h3 {
 
 input[type=checkbox].align-h3 {
     margin-top: 30px;
-    margin-left: 15px;
     display: block;
     float: left;
 }
@@ -142,14 +141,13 @@ select.align-h3 {
 
 label.align-h3 {
     margin-top: 25px;
-    margin-left: 5px;
+    margin-left: 10px;
     display: block;
     float: left;
 }
 
 button.align-h3 {
     margin-top: 22px;
-    margin-left: 5px;
     display: block;
     float: left;
 }
@@ -170,4 +168,9 @@ h1, h2, h3, h4, h5, h6 {
 .icon-button > .material-icons {
     display: block;
     margin: -1px -5px;
+}
+
+
+.database-message {
+    margin-bottom: 0;
 }
