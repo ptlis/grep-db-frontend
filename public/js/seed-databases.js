@@ -21,43 +21,43 @@
             host: $('#' + seedTarget + '__host').val(),
             port: $('#' + seedTarget + '__port').val()
         };
-        var $alertElement = $('#' + seedTarget + '__database_message');
+        var $alert = $('#' + seedTarget + '__database_message');
+        var $select = $('#' + seedTarget + '__database');
+
+        // Remove options, set only default message
+        $select.empty();
+        $select.append('<option disabled>Select a database...</option>');
 
         $.post('databases.php', params)
             .done(function (response) {
-                var $select = $('#' + seedTarget + '__database');
-
                 if (response.length) {
-                    $select.empty();
-                    $select.append('<option disabled>Select a database...</option>');
                     response.forEach(function (value) {
                         $select.append($('<option value="' + value + '">' + value + '</option>'));
                     });
 
-                    $alertElement.removeClass('alert-info');
-                    $alertElement.removeClass('alert-danger');
-                    $alertElement.addClass('alert-success');
-                    $alertElement.empty();
-                    $alertElement.append('<p>Databases have been found.</p>');
+                    $alert.removeClass('alert-info');
+                    $alert.removeClass('alert-danger');
+                    $alert.addClass('alert-success');
+                    $alert.empty();
+                    $alert.append('<p>Databases have been found.</p>');
                 } else {
-                    $alertElement.removeClass('alert-info');
-                    $alertElement.removeClass('alert-success');
-                    $alertElement.addClass('alert-danger');
-                    $alertElement.empty();
-                    $alertElement.append('<p>No databases found.</p>');
+                    $alert.removeClass('alert-info');
+                    $alert.removeClass('alert-success');
+                    $alert.addClass('alert-danger');
+                    $alert.empty();
+                    $alert.append('<p>No databases found.</p>');
                 }
             })
             .fail(function (response, wat) {
-                $alertElement.removeClass('alert-info');
-                $alertElement.removeClass('alert-success');
-                $alertElement.addClass('alert-danger');
-                $alertElement.empty();
+                $alert.removeClass('alert-info');
+                $alert.removeClass('alert-success');
+                $alert.addClass('alert-danger');
+                $alert.empty();
 
                 response.responseJSON.forEach(function (errorMessage) {
-                    $alertElement.append('<p>' + errorMessage + '</p>');
+                    $alert.append('<p>' + errorMessage + '</p>');
                 });
             });
-        console.log(params);
     }
 })();
 
