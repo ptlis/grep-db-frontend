@@ -64,15 +64,15 @@
 
                                     <div class="row">
                                         <div class="col-xs-3">
-                                            <h3>Database:</h3>
+                                            <h3>Credentials:</h3>
                                         </div>
 
                                         <div class="col-xs-2">
-                                            <label for="search__username"><h4 class="align-h3">Username:</h4></label>
+                                            <label for="search__user"><h4 class="align-h3">Username:</h4></label>
                                         </div>
 
                                         <div class="col-xs-3">
-                                            <input type="text" id="search__username" placeholder="Username" class="align-h3">
+                                            <input type="text" id="search__user" placeholder="Username" class="align-h3">
                                         </div>
                                     </div>
 
@@ -88,11 +88,11 @@
 
                                     <div class="row">
                                         <div class="col-xs-2 col-xs-offset-3">
-                                            <label for="search__hostname"><h4 class="align-h3">Host:</h4></label>
+                                            <label for="search__host"><h4 class="align-h3">Host:</h4></label>
                                         </div>
 
                                         <div class="col-xs-3">
-                                            <input type="text" id="search__hostname" placeholder="Host" class="align-h3" value="127.0.0.1">
+                                            <input type="text" id="search__host" placeholder="Host" class="align-h3" value="127.0.0.1">
                                         </div>
                                     </div>
 
@@ -106,18 +106,32 @@
                                         </div>
                                     </div>
 
+
+                                    <hr>
+
+
                                     <div class="row">
-                                        <div class="col-xs-2 col-xs-offset-3">
-                                            <label for="search__database"><h4 class="align-h3">Database:</h4></label>
+                                        <div class="col-xs-offset-3 col-xs-9">
+                                            <div class="alert alert-info database-message" id="search__database_message">
+                                                <p>Hit refresh to see available databases.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <label for="search__database"><h3>Database:</h3></label>
                                         </div>
 
                                         <div class="col-xs-3">
-                                            <select class="align-h3">
+                                            <select id="search__database" class="align-h3">
                                                 <option disabled>Select a database...</option>
                                             </select>
                                         </div>
-                                        <div class="col-xs-1">
-                                            <button class="align-h3 icon-button"><i class="material-icons">refresh</i></button>
+                                        <div class="col-xs-6">
+                                            <button id="search__seed_database" class="align-h3 icon-button refresh-db" data-seed-target="search"><i class="material-icons">refresh</i></button>
+                                            <label for="search__seed_database" class="align-h3">Refresh Databases</label>
                                         </div>
                                     </div>
                                 </form>
@@ -161,73 +175,16 @@
             </div>
         </div>
 
+        <!-- Libraries -->
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.js"></script>
 
-
-        <!-- Handle 'pages' - this is a lightly-modified version of the JS powering the bootstrap material design site -->
-        <script type="text/javascript">
-
-            // Ensure that the first page is selected if none is provided
-            $(document).ready(function () {
-                var $sideBarList = $('#sidebar_menu li');
-                var basePage = $($sideBarList[0]).attr('data-target');
-
-                if (window.location.hash !== basePage) {
-                    var $page = $('.menu').find('li[data-target="' + basePage + '"]');
-                    if (window.location.hash !== $page.data('target')) {
-                        window.location.hash = $page.data('target');
-                    }
-                    $page.trigger('click');
-                }
-            });
-
-
-            // Handle window resizes
-            $(window).on('resize', function () {
-                var height = $(window).height();
-                $('html, body').height(height);
-                $('.main, .menu').height(height - $('.header-panel').outerHeight());
-                $('.pages').height(height);
-            }).trigger('resize');
-
-
-            // Switch out active page
-            $('.menu li').click(function () {
-
-                // Skip if already on the correct page
-                if (!$(this).data('target') || $(this).is('.active')) {
-                    return;
-                }
-
-                window.location.hash = $(this).data('target');
-
-                $('.menu li').removeClass('active');
-                $(this).addClass('active');
-                $('.page').not(window.location.hash).removeClass('active').hide();
-
-
-
-                var page = $(window.location.hash);
-                page.show();
-
-                var totop = setInterval(function () {
-                    $('.pages').animate({scrollTop: 0}, 0);
-                }, 1);
-
-                setTimeout(function () {
-                    page.addClass('active');
-                    setTimeout(function () {
-                        clearInterval(totop);
-                    }, 1000);
-                }, 100);
-            });
-        </script>
+        <!-- GrepDb JavaScript -->
+        <script type="text/javascript" src="js/pages.js"></script>
         <script type="text/javascript">
             $.material.init();
         </script>
-
     </body>
 </html>
