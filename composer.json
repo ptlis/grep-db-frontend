@@ -21,7 +21,8 @@
     ],
     "require": {
         "ptlis/grep-db": "^0.0.1",
-        "symfony/console": "^3.3"
+        "symfony/console": "^3.3",
+        "twig/twig": "^2.4"
     },
     "bin": ["bin/biff"],
     "minimumStability": "dev",

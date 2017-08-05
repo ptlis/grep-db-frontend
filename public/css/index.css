@@ -1,0 +1,173 @@
+* {
+    box-sizing: border-box;
+}
+
+.header-panel {
+    background-color: #D84315;
+    height: 144px;
+    position: relative;
+    z-index: 3;
+}
+
+.header-panel div {
+    position: relative;
+    height: 100%;
+}
+
+.header-panel h1 {
+    color: #FFF;
+    position: absolute;
+    bottom: 10px;
+    padding-left: 35px;
+}
+
+.menu {
+    overflow: auto;
+    padding: 0;
+}
+
+.menu, .menu * {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.menu ul {
+    padding: 0;
+    margin: 7px 0;
+}
+
+.menu ul li {
+    list-style: none;
+    padding: 20px 0 20px 50px;
+    font-size: 15px;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.menu ul li.active {
+    background-color: #dedede;
+    position: relative;
+}
+
+.menu ul li a {
+    color: rgb(51, 51, 51);
+    text-decoration: none;
+}
+
+.pages {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 4;
+    padding: 0;
+    overflow: auto;
+    overflow-y: scroll;
+}
+
+.pages > div {
+    padding: 0 5px;
+    padding-top: 64px;
+    margin: 0;
+}
+
+.pages .header {
+    color: rgb(82, 101, 162);
+}
+
+.page {
+    transform: translateY(1080px);
+    transition: transform 0 linear;
+    display: none;
+    opacity: 0;
+    font-size: 16px;
+    margin-left: 1em;
+}
+
+.page.active {
+    transform: translateY(0px);
+    transition: all 0.3s ease-out;
+    display: block;
+    opacity: 1;
+}
+
+#source-modal h4 {
+    color: black;
+}
+
+#paypal .btn {
+    padding: 5px 30px 6px 30px;
+}
+
+#paypal input {
+    background: transparent;
+    border: 0;
+}
+
+.cbwrapper div {
+    display: none;
+}
+
+.cbwrapper div:nth-child(2) {
+    display: block;
+}
+
+.btn-primary select {
+    color: black;
+}
+
+input[type=text].align-h3,
+input[type=password].align-h3 {
+    margin-top: 22px;
+    display: block;
+    float: left;
+    padding-left: 3px;
+    padding-right: 3px;
+    width: 100%;
+}
+
+input[type=checkbox].align-h3 {
+    margin-top: 30px;
+    margin-left: 15px;
+    display: block;
+    float: left;
+}
+
+select.align-h3 {
+    margin-top: 22px;
+    padding-bottom: 3px;
+    padding-top: 2px;
+    width: 100%;
+}
+
+label.align-h3 {
+    margin-top: 25px;
+    margin-left: 5px;
+    display: block;
+    float: left;
+}
+
+button.align-h3 {
+    margin-top: 22px;
+    margin-left: 5px;
+    display: block;
+    float: left;
+}
+
+h4.align-h3 {
+    margin-top: 26px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+}
+
+
+.icon-button {
+
+}
+
+.icon-button > .material-icons {
+    display: block;
+    margin: -1px -5px;
+}

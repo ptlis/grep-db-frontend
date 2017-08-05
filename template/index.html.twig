@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>GrepDb</title>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.css">
+        <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/ripples.css">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+    </head>
+
+    <body>
+        <a style="position: absolute; top: 0; left: 0; border: 0; z-index: 10;" href="https://github.com/ptlis/grep-db-frontend">
+            <img src="https://camo.githubusercontent.com/c6286ade715e9bea433b4705870de482a654f78a/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png">
+        </a>
+        <div class="header-panel shadow-z-2">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <h1>GrepDb</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid main">
+            <div class="row">
+                <nav class="col-xs-3 menu" id="sidebar_menu">
+                    <ul>
+                        <li class="active withripple" data-target="#search">Search</li>
+                        <li class="withripple" data-target="#replace">Search & Replace</li>
+                    </ul>
+                </nav>
+                <div class="pages col-xs-9">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <div class="well page active" id="search">
+                                <h1 class="header">Search</h1>
+
+                                <hr>
+
+                                <form id="search">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <label for="search__search_term"><h3>Search:</h3></label>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <input type="text" id="search__search_term" placeholder="Search Terms" class="align-h3">
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <input type="checkbox" id="search__regex" class="align-h3">
+                                            <label for="search__regex" class="align-h3">Regex</label>
+                                        </div>
+                                    </div>
+
+
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <h3>Database:</h3>
+                                        </div>
+
+                                        <div class="col-xs-2">
+                                            <label for="search__username"><h4 class="align-h3">Username:</h4></label>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <input type="text" id="search__username" placeholder="Username" class="align-h3">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-2 col-xs-offset-3">
+                                            <label for="search__password"><h4 class="align-h3">Password:</h4></label>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <input type="password" id="search__password" placeholder="Password" class="align-h3">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-2 col-xs-offset-3">
+                                            <label for="search__hostname"><h4 class="align-h3">Host:</h4></label>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <input type="text" id="search__hostname" placeholder="Host" class="align-h3" value="127.0.0.1">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-2 col-xs-offset-3">
+                                            <label for="search__port"><h4 class="align-h3">Port:</h4></label>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <input type="text" id="search__port" placeholder="Port" class="align-h3" value="3306">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-2 col-xs-offset-3">
+                                            <label for="search__database"><h4 class="align-h3">Database:</h4></label>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <select class="align-h3">
+                                                <option disabled>Select a database...</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <button class="align-h3 icon-button"><i class="material-icons">refresh</i></button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="well page" id="replace">
+                                <h1 class="header">Search & Replace</h1>
+
+                                <hr>
+
+                                <form id="replace">
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <h3>Search:</h3>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <input type="text" id="replace__search_term" placeholder="Search Terms" class="align-h3">
+                                        </div>
+
+                                        <div class="col-xs-2">
+                                            <input type="checkbox" id="replace__regex" class="align-h3">
+                                            <label for="replace__regex" class="align-h3">Regex</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-3">
+                                            <h3>Replace:</h3>
+                                        </div>
+
+                                        <div class="col-xs-3">
+                                            <input type="text" id="replace__replacement" placeholder="Replacement" class="align-h3">
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.js"></script>
+
+
+        <!-- Handle 'pages' - this is a lightly-modified version of the JS powering the bootstrap material design site -->
+        <script type="text/javascript">
+
+            // Ensure that the first page is selected if none is provided
+            $(document).ready(function () {
+                var $sideBarList = $('#sidebar_menu li');
+                var basePage = $($sideBarList[0]).attr('data-target');
+
+                if (window.location.hash !== basePage) {
+                    var $page = $('.menu').find('li[data-target="' + basePage + '"]');
+                    if (window.location.hash !== $page.data('target')) {
+                        window.location.hash = $page.data('target');
+                    }
+                    $page.trigger('click');
+                }
+            });
+
+
+            // Handle window resizes
+            $(window).on('resize', function () {
+                var height = $(window).height();
+                $('html, body').height(height);
+                $('.main, .menu').height(height - $('.header-panel').outerHeight());
+                $('.pages').height(height);
+            }).trigger('resize');
+
+
+            // Switch out active page
+            $('.menu li').click(function () {
+
+                // Skip if already on the correct page
+                if (!$(this).data('target') || $(this).is('.active')) {
+                    return;
+                }
+
+                window.location.hash = $(this).data('target');
+
+                $('.menu li').removeClass('active');
+                $(this).addClass('active');
+                $('.page').not(window.location.hash).removeClass('active').hide();
+
+
+
+                var page = $(window.location.hash);
+                page.show();
+
+                var totop = setInterval(function () {
+                    $('.pages').animate({scrollTop: 0}, 0);
+                }, 1);
+
+                setTimeout(function () {
+                    page.addClass('active');
+                    setTimeout(function () {
+                        clearInterval(totop);
+                    }, 1000);
+                }, 100);
+            });
+        </script>
+        <script type="text/javascript">
+            $.material.init();
+        </script>
+
+    </body>
+</html>
