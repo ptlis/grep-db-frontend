@@ -10,7 +10,7 @@ use Doctrine\DBAL\DriverManager;
 
 
 // Only listen on POST
-$keys = [
+$expectedKeys = [
     'user',
     'password',
     'host',
@@ -29,7 +29,7 @@ if ('POST' !== $_SERVER['REQUEST_METHOD']) {
 
 // Ensure keys were sent
 } else {
-    foreach ($keys as $key) {
+    foreach ($expectedKeys as $key) {
         if (!array_key_exists($key, $_POST)) {
             $errors[] = '"' . $key . '" must be provided';
         }
@@ -54,9 +54,11 @@ if (!count($errors)) {
             'driver' => 'pdo_mysql' // TODO: Allow selection
         ]);
 
-        foreach ($connection->query('SHOW DATABASES')->fetchAll(\PDO::FETCH_ASSOC) as $database) {
-            if (!in_array($database['Database'], $excludeDatabases)) {
-                $result[] = $database['Database'];
+
+        $statement = $connection->query('SHOW DATABASES');
+        while ($database = $statement->fetchColumn(0)) {
+            if (!in_array($database, $excludeDatabases)) {
+                $result[] = $database;
             }
         }
 
