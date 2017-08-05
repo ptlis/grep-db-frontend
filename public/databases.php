@@ -36,6 +36,13 @@ if ('POST' !== $_SERVER['REQUEST_METHOD']) {
     }
 }
 
+// Internal mySQL database to ignore
+$excludeDatabases = [
+    'information_schema',
+    'performance_schema',
+    'sys',
+    'mysql'
+];
 
 if (!count($errors)) {
     try {
@@ -48,7 +55,9 @@ if (!count($errors)) {
         ]);
 
         foreach ($connection->query('SHOW DATABASES')->fetchAll(\PDO::FETCH_ASSOC) as $database) {
-            $result[] = $database['Database'];
+            if (!in_array($database['Database'], $excludeDatabases)) {
+                $result[] = $database['Database'];
+            }
         }
 
     } catch (\Exception $e) {
