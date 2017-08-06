@@ -48,7 +48,7 @@
                     $alert.append('<p>No databases found.</p>');
                 }
             })
-            .fail(function (response, wat) {
+            .fail(function (response) {
                 $alert.removeClass('alert-info');
                 $alert.removeClass('alert-success');
                 $alert.addClass('alert-danger');
