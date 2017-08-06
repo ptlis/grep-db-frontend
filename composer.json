@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "ptlis/grep-db": "^0.0.1",
+        "ptlis/grep-db": "^0.0.6",
         "symfony/console": "^3.3",
         "twig/twig": "^2.4"
     },

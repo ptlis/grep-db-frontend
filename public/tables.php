@@ -6,7 +6,7 @@ error_reporting(-1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Doctrine\DBAL\DriverManager;
+use ptlis\GrepDb\GrepDb;
 
 
 // Only listen on POST
@@ -39,24 +39,11 @@ if ('POST' !== $_SERVER['REQUEST_METHOD']) {
 
 
 if (!count($errors)) {
-    try {
-        $connection = DriverManager::getConnection([
-            'dbname' => $_POST['dbname'],
-            'user' => $_POST['user'],
-            'password' => $_POST['password'],
-            'host' => $_POST['host'],
-            'port' => $_POST['port'],
-            'driver' => 'pdo_mysql' // TODO: Allow selection
-        ]);
-
-        $statement = $connection->query('SHOW TABLES');
-        while ($table = $statement->fetchColumn(0)) {
-            $result[] = $table;
-        }
-
-    } catch (\Exception $e) {
-        $errors[] = $e->getMessage();
-    }
+    $grepDb = new GrepDb($_POST['user'], $_POST['password'], $_POST['host'], $_POST['port']);
+    $result = $grepDb
+        ->getServerMetadata()
+        ->getDatabaseMetadata($_POST['dbname'])
+        ->getTableNames();
 }
 
 

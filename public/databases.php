@@ -6,7 +6,7 @@ error_reporting(-1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Doctrine\DBAL\DriverManager;
+use ptlis\GrepDb\GrepDb;
 
 
 // Only listen on POST
@@ -27,7 +27,7 @@ $errors = [];
 if ('POST' !== $_SERVER['REQUEST_METHOD']) {
     $errors[] = 'Requests must use the POST method';
 
-// Ensure keys were sent
+// Ensure required parameters were passed
 } else {
     foreach ($expectedKeys as $key) {
         if (!array_key_exists($key, $_POST)) {
@@ -36,38 +36,16 @@ if ('POST' !== $_SERVER['REQUEST_METHOD']) {
     }
 }
 
-// Internal mySQL database to ignore
-$excludeDatabases = [
-    'information_schema',
-    'performance_schema',
-    'sys',
-    'mysql'
-];
-
+// Get the list of databases that this user can view
 if (!count($errors)) {
-    try {
-        $connection = DriverManager::getConnection([
-            'user' => $_POST['user'],
-            'password' => $_POST['password'],
-            'host' => $_POST['host'],
-            'port' => $_POST['port'],
-            'driver' => 'pdo_mysql' // TODO: Allow selection
-        ]);
-
-
-        $statement = $connection->query('SHOW DATABASES');
-        while ($database = $statement->fetchColumn(0)) {
-            if (!in_array($database, $excludeDatabases)) {
-                $result[] = $database;
-            }
-        }
-
-    } catch (\Exception $e) {
-        $errors[] = $e->getMessage();
-    }
+    $grepDb = new GrepDb($_POST['user'], $_POST['password'], $_POST['host'], $_POST['port']);
+    $result = $grepDb
+        ->getServerMetadata()
+        ->getDatabaseNames();
 }
 
 
+// Build response
 header('Content-Type: application/json');
 if (!$errors) {
     http_response_code(200);
