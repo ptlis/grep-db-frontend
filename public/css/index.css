@@ -156,6 +156,15 @@ h4.align-h3 {
     margin-top: 26px;
 }
 
+input[type="text"].align-h4,
+input[type="password"].align-h4 {
+    margin-top: 6px;
+    width: 100%;
+    padding-left: 3px;
+    padding-right: 3px;
+    border: 1px solid #ccc;
+}
+
 h1, h2, h3, h4, h5, h6 {
     color: #333;
 }
