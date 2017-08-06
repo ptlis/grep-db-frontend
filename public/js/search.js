@@ -7,10 +7,12 @@
 
         // Seed databases
         $('[data-seed-db-target]').each(function () {
+            var targetName = $(this).attr('data-seed-db-target');
+
             $(this).on(
                 'click',
                 function() {
-                    seedDatabases($(this).attr('data-seed-db-target'));
+                    seedDatabases(targetName);
                 }
             )
         });
@@ -22,43 +24,53 @@
 
         // Seed tables on database selection
         $tableSelect.each(function () {
-            var seedTargetName = $(this).attr('data-seed-table-target');
+            var targetName = $(this).attr('data-seed-table-target');
 
-            $('#' + seedTargetName + '__database').on(
+            // Seed tables on database selection
+            $('#' + targetName + '__database').on(
                 'change',
                 function () {
-                    seedTables(seedTargetName);
+                    seedTables(targetName);
                 }
             );
 
-            $('[data-seed-db-target="' + seedTargetName + '"]').on(
+            // Clear tables on database refresh
+            $('[data-seed-db-target="' + targetName + '"]').on(
                 'click',
                 function () {
-                    clearTableSelection(seedTargetName);
+                    clearTableSelection(targetName);
                 }
-            )
+            );
+
+            // Update search enabled on keypress in search terms input
+            $('#' + targetName + '__search_term').on(
+                'keyup',
+                function () {
+                    updateSearchEnabled(targetName);
+                }
+            );
         });
     });
 
-    function getCredentials(seedTargetName) {
+    function getCredentials(targetName) {
         return {
-            user: $('#' + seedTargetName + '__user').val(),
-            password: $('#' + seedTargetName + '__password').val(),
-            host: $('#' + seedTargetName + '__host').val(),
-            port: $('#' + seedTargetName + '__port').val()
+            user: $('#' + targetName + '__user').val(),
+            password: $('#' + targetName + '__password').val(),
+            host: $('#' + targetName + '__host').val(),
+            port: $('#' + targetName + '__port').val()
         };
     }
 
-    function seedTables(seedTargetName) {
-        var $tableSelect = $('[data-seed-table-target="' + seedTargetName + '"]');
-        var databaseName = $('#' + seedTargetName + '__database').val();
+    function seedTables(targetName) {
+        var $tableSelect = $('[data-seed-table-target="' + targetName + '"]');
+        var databaseName = $('#' + targetName + '__database').val();
 
-        var params = getCredentials(seedTargetName);
+        var params = getCredentials(targetName);
         params.dbname = databaseName;
 
         $.post('tables.php', params)
             .done(function (response) {
-                clearTableSelection(seedTargetName);
+                clearTableSelection(targetName);
 
                 if (response.length) {
                     response.forEach(function (tableName) {
@@ -68,15 +80,16 @@
 
                 $tableSelect.multiSelect('refresh');
                 $tableSelect.multiSelect('select_all');
+                updateSearchEnabled(targetName);
             })
-            .fail(function (response, wat) {
-                console.log('error');
+            .fail(function (response) {
+                showErrorMessage(targetName, response);
             });
     }
 
-    function seedDatabases(seedTargetName) {
-        var params = getCredentials(seedTargetName);
-        var $select = $('#' + seedTargetName + '__database');
+    function seedDatabases(targetName) {
+        var params = getCredentials(targetName);
+        var $select = $('#' + targetName + '__database');
 
         // Remove options, set only default message
         $select.empty();
@@ -89,18 +102,19 @@
                         $select.append($('<option value="' + value + '">' + value + '</option>'));
                     });
 
-                    showSuccessMessage(seedTargetName, 'Databases have been found.');
+                    updateSearchEnabled(targetName);
+                    showSuccessMessage(targetName, 'Databases have been found.');
                 } else {
-                    showErrorMessage(seedTargetName, ['No databases found']);
+                    showErrorMessage(targetName, ['No databases found']);
                 }
             })
             .fail(function (response) {
-                showErrorMessage(seedTargetName, response.responseJSON);
+                showErrorMessage(targetName, response.responseJSON);
             });
     }
 
-    function showErrorMessage(seedTargetName, errorMessageList) {
-        var $alert = $('#' + seedTargetName + '__database_message');
+    function showErrorMessage(targetName, errorMessageList) {
+        var $alert = $('#' + targetName + '__database_message');
 
         $alert.removeClass('alert-info');
         $alert.removeClass('alert-success');
@@ -111,8 +125,8 @@
         });
     }
 
-    function showSuccessMessage(seedTargetName, message) {
-        var $alert = $('#' + seedTargetName + '__database_message');
+    function showSuccessMessage(targetName, message) {
+        var $alert = $('#' + targetName + '__database_message');
 
         $alert.removeClass('alert-info');
         $alert.removeClass('alert-danger');
@@ -121,22 +135,34 @@
         $alert.append('<p>' + message + '</p>');
     }
 
-    function updateSearchEnabled(seedTargetName) {
-        var searchTerms = $('#' + seedTargetName + '__search_term').val();
+    function updateSearchEnabled(targetName) {
+        var searchTerms = $('#' + targetName + '__search_term').val();
+        var databaseName = $('#' + targetName + '__database').val();
+        var tables = $('#' + targetName + '__tables').val();
+
+        if (
+            searchTerms && searchTerms.length
+            && databaseName && databaseName.length
+            && tables && tables.length
+        ) {
+            enableSearch(targetName);
+        } else {
+            disableSearch(targetName);
+        }
     }
 
-    function enableSearch(seedTargetName) {
-        $('#' + seedTargetName + '__search_button')
+    function enableSearch(targetName) {
+        $('#' + targetName + '__search_button')
              .removeClass('disabled');
     }
 
-    function disableSearch(seedTargetName) {
-        $('#' + seedTargetName + '__search_button')
+    function disableSearch(targetName) {
+        $('#' + targetName + '__search_button')
             .addClass('disabled');
     }
 
-    function clearTableSelection(seedTargetName) {
-        var $tableSelect = $('[data-seed-table-target="' + seedTargetName + '"]');
+    function clearTableSelection(targetName) {
+        var $tableSelect = $('[data-seed-table-target="' + targetName + '"]');
         $tableSelect.empty();
         $tableSelect.multiSelect('refresh');
     }
