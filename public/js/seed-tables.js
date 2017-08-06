@@ -19,6 +19,15 @@
                 'change',
                 getSeedTablesCallback(seedTargetName)
             );
+
+            $('[data-seed-db-target="' + seedTargetName + '"]').on(
+                'click',
+                function () {
+                    var $tableSelect = $('[data-seed-table-target="' + seedTargetName + '"]');
+                    $tableSelect.empty();
+                    $tableSelect.multiSelect('refresh');
+                }
+            )
         });
     });
 
