@@ -72,7 +72,7 @@
 }
 
 .pages .header {
-    color: rgb(82, 101, 162);
+    color: #bf360c;
 }
 
 .page {
@@ -137,6 +137,11 @@ select.align-h3 {
     width: 100%;
 }
 
+label {
+    color: #333;
+    font-weight: 300;
+}
+
 label.align-h3 {
     margin-top: 25px;
     margin-left: 10px;
@@ -144,7 +149,7 @@ label.align-h3 {
     float: left;
 }
 
-button.align-h3 {
+.icon-button.align-h3 {
     margin-top: 22px;
     display: block;
     float: left;
@@ -172,11 +177,12 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0;
 }
 
-.icon-button > .material-icons {
+.icon-button {
     display: block;
-    margin: -1px -5px;
+    margin-top: 0;
+    padding: 1px !important;
+    border: 1px solid #ccc;
 }
-
 
 .database-message {
     margin-top: 20px;
@@ -196,10 +202,18 @@ hr {
     margin-bottom: 0;
 }
 
+.table-label-row h4 {
+    text-align: center;
+}
+
+.search-button {
+    background-color: #ff5722 !important;
+    color: #fff !important;
+}
+
 /* Multiselect styles */
 .ms-container {
     width: 100%;
-    margin-top: 20px;
 }
 
 .ms-container .ms-selectable,
