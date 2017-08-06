@@ -38,10 +38,14 @@ if ('POST' !== $_SERVER['REQUEST_METHOD']) {
 
 // Get the list of databases that this user can view
 if (!count($errors)) {
-    $grepDb = new GrepDb($_POST['user'], $_POST['password'], $_POST['host'], $_POST['port']);
-    $result = $grepDb
-        ->getServerMetadata()
-        ->getDatabaseNames();
+    try {
+        $grepDb = new GrepDb($_POST['user'], $_POST['password'], $_POST['host'], $_POST['port']);
+        $result = $grepDb
+            ->getServerMetadata()
+            ->getDatabaseNames();
+    } catch (\Exception $e) {
+        $errors[] = $e->getMessage();
+    }
 }
 
 

@@ -39,11 +39,15 @@ if ('POST' !== $_SERVER['REQUEST_METHOD']) {
 
 
 if (!count($errors)) {
-    $grepDb = new GrepDb($_POST['user'], $_POST['password'], $_POST['host'], $_POST['port']);
-    $result = $grepDb
-        ->getServerMetadata()
-        ->getDatabaseMetadata($_POST['dbname'])
-        ->getTableNames();
+    try {
+        $grepDb = new GrepDb($_POST['user'], $_POST['password'], $_POST['host'], $_POST['port']);
+        $result = $grepDb
+            ->getServerMetadata()
+            ->getDatabaseMetadata($_POST['dbname'])
+            ->getTableNames();
+    } catch (\Exception $e) {
+        $errors[] = $e->getMessage();
+    }
 }
 
 
