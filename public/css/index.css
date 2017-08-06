@@ -169,11 +169,7 @@ input[type="password"] {
 
 h1, h2, h3, h4, h5, h6 {
     color: #333;
-}
-
-
-.icon-button {
-
+    margin-bottom: 0;
 }
 
 .icon-button > .material-icons {
@@ -183,11 +179,20 @@ h1, h2, h3, h4, h5, h6 {
 
 
 .database-message {
+    margin-top: 20px;
     margin-bottom: 0;
 }
 
 .tables-message {
     margin-top: 15px;
+    margin-bottom: 0;
+}
+
+#search__search_button {
+    margin-top: 20px;
+}
+
+hr {
     margin-bottom: 0;
 }
 
