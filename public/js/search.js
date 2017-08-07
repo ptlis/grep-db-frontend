@@ -49,8 +49,45 @@
                     updateSearchEnabled(targetName);
                 }
             );
+
+            $('#' + targetName + '__search_button').on(
+                'click',
+                function () {
+                    search(targetName);
+                }
+            )
         });
     });
+
+    function search(targetName) {
+        var $searchButton = $('#' + targetName + '__search_button');
+        if (!$(this).hasClass('disabled')) {
+            var params = getCredentials(targetName);
+            params.search_terms = $('#' + targetName + '__search_term').val();
+            params.dbname = $('#' + targetName + '__database').val();
+            params.tables = $('#' + targetName + '__tables').val();
+
+
+
+            $.post('search.php', params)
+                .done(function (response) {
+                    var $matchList = $('#' + targetName + '__results tbody');
+                    $matchList.empty();
+
+                    for (var tableName in response) {
+                        if (response.hasOwnProperty(tableName)) {
+                            $matchList.append('<tr><td>' + tableName + '</td><td>' + response[tableName] + '</td></tr>');
+                        }
+                    }
+
+                    console.log('success!')
+                    console.log(response)
+                })
+                .fail(function (response) {
+                    showErrorMessage(targetName, response);
+                });
+        }
+    }
 
     function getCredentials(targetName) {
         return {

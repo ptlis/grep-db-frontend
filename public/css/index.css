@@ -226,3 +226,10 @@ hr {
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
+
+/* Search results */
+#search__results > thead > tr > th {
+    border-bottom-width: 1px;
+    font-weight: 300;
+}
